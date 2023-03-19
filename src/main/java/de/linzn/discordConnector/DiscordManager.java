@@ -5,6 +5,7 @@ import de.stem.stemSystem.STEMSystemApp;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.User;
 
 public class DiscordManager {
     private final String token;
@@ -36,5 +37,10 @@ public class DiscordManager {
 
     public JDA getJda() {
         return jda;
+    }
+
+    public void sendMessageToUser(String userId, String message) {
+        User user = this.getJda().retrieveUserById(userId).complete();
+        user.openPrivateChannel().complete().sendMessage(message).complete();
     }
 }

@@ -12,6 +12,8 @@
 package de.linzn.discordConnector;
 
 
+import de.linzn.discordConnector.listener.StemReceiveListener;
+import de.stem.stemSystem.STEMSystemApp;
 import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
 
 
@@ -27,8 +29,10 @@ public class DiscordConnectorPlugin extends STEMPlugin {
     @Override
     public void onEnable() {
         String token = this.getDefaultConfig().getString("discord.botToken", "xxx");
+        this.getDefaultConfig().getString("discord.keyUser", "xxx");
         this.getDefaultConfig().save();
         this.discordManager = new DiscordManager(token);
+        STEMSystemApp.getInstance().getEventModule().getStemEventBus().register(new StemReceiveListener());
     }
 
 
