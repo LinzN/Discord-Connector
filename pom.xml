@@ -19,6 +19,10 @@
             <id>Stem Builds Repository</id>
             <url>https://builds.app.stem-system.de/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>Mvn-repository</id>
+            <url>https://mvnrepository.com/artifact/</url>
+        </repository>
     </repositories>
     <build>
         <finalName>${project.name}</finalName>
@@ -85,6 +89,17 @@
             <groupId>de.stem</groupId>
             <artifactId>stem-system</artifactId>
             <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-beta.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>club.minnced</groupId>
+                    <artifactId>opus-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <properties>

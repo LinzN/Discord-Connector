@@ -18,7 +18,7 @@ import de.stem.stemSystem.modules.pluginModule.STEMPlugin;
 public class DiscordConnectorPlugin extends STEMPlugin {
 
     public static DiscordConnectorPlugin discordConnectorPlugin;
-
+    public DiscordManager discordManager;
 
     public DiscordConnectorPlugin() {
         discordConnectorPlugin = this;
@@ -26,10 +26,18 @@ public class DiscordConnectorPlugin extends STEMPlugin {
 
     @Override
     public void onEnable() {
-
+        String token = this.getDefaultConfig().getString("discord.botToken", "xxx");
+        this.getDefaultConfig().save();
+        this.discordManager = new DiscordManager(token);
     }
+
 
     @Override
     public void onDisable() {
+        this.discordManager.getJda().shutdownNow();
+    }
+
+    public DiscordManager getDiscordManager() {
+        return discordManager;
     }
 }
