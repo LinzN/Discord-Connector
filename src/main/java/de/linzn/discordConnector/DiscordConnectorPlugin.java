@@ -30,6 +30,7 @@ public class DiscordConnectorPlugin extends STEMPlugin {
     public void onEnable() {
         String token = this.getDefaultConfig().getString("discord.botToken", "xxx");
         this.getDefaultConfig().getString("discord.keyUser", "xxx");
+        this.getDefaultConfig().getString("openAI.token", "xxx");
         this.getDefaultConfig().save();
         this.discordManager = new DiscordManager(token);
         STEMSystemApp.getInstance().getEventModule().getStemEventBus().register(new StemEventListener());
