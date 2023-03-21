@@ -1,6 +1,6 @@
 main: de.linzn.discordConnector.DiscordConnectorPlugin
 name: discord-connector
 version: ${project.version}
-depend: [ ]
+depend: [ gpt-framework ]
 buildJobName: ${buildServer.jobName}
 buildNumber: ${buildServer.buildNumber}
