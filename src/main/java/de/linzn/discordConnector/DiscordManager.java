@@ -1,18 +1,11 @@
 package de.linzn.discordConnector;
 
-import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.service.OpenAiService;
 import de.linzn.discordConnector.listener.DiscordReceiveListener;
 import de.stem.stemSystem.STEMSystemApp;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiscordManager {
     private final String token;
