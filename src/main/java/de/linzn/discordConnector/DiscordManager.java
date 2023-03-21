@@ -5,7 +5,6 @@ import de.stem.stemSystem.STEMSystemApp;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 
 public class DiscordManager {
@@ -33,7 +32,7 @@ public class DiscordManager {
             STEMSystemApp.LOGGER.ERROR(e);
         }
 
-        this.jda.getPresence().setActivity(Activity.playing("API tests"));
+        this.jda.getPresence().setActivity(Activity.playing("Working on STEM stuff..."));
     }
 
     public JDA getJda() {
