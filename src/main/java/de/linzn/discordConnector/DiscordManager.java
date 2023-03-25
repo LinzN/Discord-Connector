@@ -6,6 +6,13 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+
+import java.nio.channels.Channel;
 
 public class DiscordManager {
     private final String token;
@@ -21,7 +28,7 @@ public class DiscordManager {
         JDABuilder jdaBuilder = JDABuilder.createLight(token);
         jdaBuilder.addEventListeners(new DiscordReceiveListener());
         jdaBuilder.setAutoReconnect(true);
-
+        jdaBuilder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
         this.jda = jdaBuilder.build();
         STEMSystemApp.LOGGER.CORE("Login to Discord API...");
         try {
@@ -42,5 +49,10 @@ public class DiscordManager {
     public void sendMessageToUser(String userId, String message) {
         User user = this.getJda().retrieveUserById(userId).complete();
         user.openPrivateChannel().complete().sendMessage(message).complete();
+    }
+
+    public void sendMessageToChannel(MessageChannel channel, String message) {
+
+        channel.sendMessage(message).complete();
     }
 }
