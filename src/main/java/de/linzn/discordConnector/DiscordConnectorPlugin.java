@@ -33,7 +33,7 @@ public class DiscordConnectorPlugin extends STEMPlugin {
         this.getDefaultConfig().getString("openAI.token", "xxx");
         this.getDefaultConfig().save();
         this.discordManager = new DiscordManager(token);
-        STEMSystemApp.getInstance().getEventModule().getStemEventBus().register(new StemEventListener());
+        //STEMSystemApp.getInstance().getEventModule().getStemEventBus().register(new StemEventListener());
     }
 
 

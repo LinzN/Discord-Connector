@@ -77,7 +77,7 @@ public class DiscordReceiveListener extends ListenerAdapter {
         } else {
             STEMSystemApp.LOGGER.INFO("Chat request...");
             List<String> input = new ArrayList<>();
-            input.add("[" + sender + "]-> " + content);
+            input.add( sender + " sagt: " + content );
 
             setInstance(channel.getId(), new Date().getTime());
             String chatMessage = GPTFrameworkPlugin.gptFrameworkPlugin.getGptManager().createAIChatCompletion(DiscordConnectorPlugin.discordConnectorPlugin, channel.getId()).requestCompletion(input);
