@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +23,7 @@ public class DiscordReceiveListener extends ListenerAdapter {
         concurrentHashMapInstances = new ConcurrentHashMap<>();
 
         STEMSystemApp.getInstance().getScheduler().runRepeatScheduler(DiscordConnectorPlugin.discordConnectorPlugin, () -> {
-
+/*
             for (String identityName : concurrentHashMapInstances.keySet()) {
                 long date = this.concurrentHashMapInstances.get(identityName);
                 if (date + Duration.ofMinutes(2).toMillis() < new Date().getTime()) {
@@ -33,8 +32,11 @@ public class DiscordReceiveListener extends ListenerAdapter {
                     this.concurrentHashMapInstances.remove(identityName);
                 }
             }
+
+ */
             DiscordConnectorPlugin.discordConnectorPlugin.discordManager.getJda().getPresence().setActivity(Activity.playing("Instances: " + this.concurrentHashMapInstances.size()));
         }, 4, 1, TimeUnit.SECONDS);
+
     }
 
 
@@ -77,7 +79,7 @@ public class DiscordReceiveListener extends ListenerAdapter {
         } else {
             STEMSystemApp.LOGGER.INFO("Chat request...");
             List<String> input = new ArrayList<>();
-            input.add( sender + " sagt: " + content );
+            input.add(sender + " sagt: " + content);
 
             setInstance(channel.getId(), new Date().getTime());
             String chatMessage = GPTFrameworkPlugin.gptFrameworkPlugin.getGptManager().createAIChatCompletion(DiscordConnectorPlugin.discordConnectorPlugin, channel.getId()).requestCompletion(input);
