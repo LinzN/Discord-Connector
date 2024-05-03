@@ -69,13 +69,8 @@
                         </goals>
 
                         <configuration>
-                            <outputDirectory>target/export-lib</outputDirectory>
-                            <excludeGroupIds>de.stem, de.stem.plugins, org.yaml, org.json, org.eclipse,
-                                org.xerial, org.slf4j, com.google.*, com.google, org.codehaus.mojo,
-                                org.checkerframework, mysql
-                            </excludeGroupIds>
-                            <excludeArtifactIds>openJL, simplyDatabase, simplyLogger, simplyConfiguration, stemLink
-                            </excludeArtifactIds>
+                            <outputDirectory>target/libraries</outputDirectory>
+                            <excludeScope>provided</excludeScope>
                         </configuration>
                     </execution>
                 </executions>
@@ -89,16 +84,19 @@
             <groupId>de.stem</groupId>
             <artifactId>stem-system</artifactId>
             <version>1.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.stem.plugins</groupId>
             <artifactId>gpt-framework</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>5.0.0-beta.5</version>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>
