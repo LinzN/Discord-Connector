@@ -3,6 +3,7 @@ package de.linzn.discordConnector.listener;
 import de.linzn.discordConnector.DiscordConnectorPlugin;
 import de.linzn.gptFramework.GPTFrameworkPlugin;
 import de.stem.stemSystem.STEMSystemApp;
+import de.stem.stemSystem.modules.cloudModule.CloudFile;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
@@ -10,6 +11,12 @@ import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,9 +79,34 @@ public class DiscordReceiveListener extends ListenerAdapter {
 
         if (content.startsWith("CreateImage: ")) {
             STEMSystemApp.LOGGER.INFO("Image request...");
-            String url = GPTFrameworkPlugin.gptFrameworkPlugin.getGptManager().createAIImageCompletion().requestCompletion(content.replace("CreateImage:", ""));
+            String openAIURL = GPTFrameworkPlugin.gptFrameworkPlugin.getGptManager().createAIImageCompletion().requestCompletion(content.replace("CreateImage:", ""));
+            StringBuilder url;
+            try {
+            URL openaiImageUrl = new URL(openAIURL);
+            File tempDirectory = new File(DiscordConnectorPlugin.discordConnectorPlugin.getDataFolder(), "temp");
+            if (!tempDirectory.exists()) {
+                tempDirectory.mkdir();
+            }
+
+            File tempFile = new File(tempDirectory, "picture.png");
+            InputStream in = openaiImageUrl.openStream();
+            Files.copy(in, Paths.get(tempFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
+
+            CloudFile cloudFile = STEMSystemApp.getInstance().getCloudModule().uploadFileRandomName(tempFile, "/GeneratedImages/");
+            if (cloudFile != null) {
+                String nextcloudURL = cloudFile.createPublicShareLink();
+                url = new StringBuilder(nextcloudURL);
+            } else {
+                throw new IllegalArgumentException("Error while uploading file to cloud!");
+            }
+
+            } catch (Exception e) {
+                STEMSystemApp.LOGGER.ERROR(e);
+                url = new StringBuilder("An error was catch in kernel stacktrace! Please check STEM logs for more information!");
+            }
+
             STEMSystemApp.LOGGER.INFO("Callback received!");
-            DiscordConnectorPlugin.discordConnectorPlugin.discordManager.sendMessageToChannel(channel, url);
+            DiscordConnectorPlugin.discordConnectorPlugin.discordManager.sendMessageToChannel(channel, url.toString());
 
         } else {
             STEMSystemApp.LOGGER.INFO("Chat request...");
